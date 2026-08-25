@@ -194,40 +194,46 @@ export default function TechNotes() {
             <span className="font-display text-3xl font-bold text-sig">2</span>
             <div>
               <p className="font-display text-[14.5px] font-bold tracking-wide text-sig uppercase">
-                Capacitor · APK vero in 5 comandi
+                PWABuilder · APK firmato, senza installare nulla
               </p>
               <p className="mt-1 max-w-2xl text-[13.5px] leading-relaxed text-dim">
-                Serve <strong className="text-ink">Android Studio</strong> (con JDK 17 e SDK 34).
-                Il progetto web viene impacchettato in un'app nativa con WebView:
-              </p>
-              <pre className="mt-2.5 overflow-x-auto border border-line bg-[#0d1626] px-4 py-3 font-tech text-[11.5px] leading-relaxed text-data" style={{ borderRadius: "10px" }}>
-{`npm i @capacitor/core @capacitor/android && npm i -D @capacitor/cli
-npx cap init TAGKEY com.tuonome.tagkey --web-dir dist
-npm run build && npx cap add android && npx cap sync
-npx cap open android   # → Build ▸ Build APK(s) in Android Studio`}
-              </pre>
-              <p className="mt-2 text-[12px] text-faint">
-                Aggiungi <span className="font-tech text-dim">&lt;uses-permission android:name="android.permission.NFC"/&gt;</span>{" "}
-                in AndroidManifest.xml per il Web NFC dentro la WebView.
+                Pubblica il sito in <strong className="text-ink">HTTPS</strong> (basta trascinare{" "}
+                <span className="font-tech">dist/</span> su{" "}
+                <strong className="text-ink">app.netlify.com/drop</strong>), poi su{" "}
+                <strong className="text-ink">pwabuilder.com</strong> incolla l'URL →{" "}
+                <em>"Package for Stores"</em> → <strong className="text-ink">Android</strong> →{" "}
+                <em>Generate</em>. Scarichi <span className="font-tech text-sig">app-release-signed.apk</span>{" "}
+                pronto da installare (e il <span className="font-tech">.aab</span> per il Play
+                Store). Nessun tool sul PC: è una Trusted Web Activity, quindi Web NFC incluso.
               </p>
             </div>
           </li>
           <li className="grid gap-2 px-5 py-4 sm:grid-cols-[64px_1fr]">
             <span className="font-display text-3xl font-bold text-data">3</span>
             <div>
-              <p className="font-display text-[14.5px] font-bold tracking-wide text-data uppercase">
-                Bubblewrap · APK firmato senza Android Studio
+              <p className="font-display flex flex-wrap items-center gap-2 text-[14.5px] font-bold tracking-wide text-data uppercase">
+                Capacitor · progetto già configurato
+                <span className="font-tech border border-ok/50 bg-ok/10 px-2 py-0.5 text-[9px] tracking-[0.18em] text-ok" style={{ borderRadius: "5px" }}>
+                  PRONTO QUI
+                </span>
               </p>
               <p className="mt-1 max-w-2xl text-[13.5px] leading-relaxed text-dim">
-                Se pubblichi l'app su un dominio <strong className="text-ink">HTTPS</strong>{" "}
-                (GitHub Pages, Netlify…), Bubblewrap genera un APK/AAB firmato partendo dal
-                manifest:
+                I pacchetti Capacitor sono <strong className="text-ink">già installati</strong> e{" "}
+                <span className="font-tech">capacitor.config.ts</span> è già scritto (appId{" "}
+                <span className="font-tech text-data">com.tagkey.portachiavinfc</span>). Col tuo PC
+                e <strong className="text-ink">Android Studio</strong> (JDK 17, SDK 34) restano 3
+                comandi:
               </p>
               <pre className="mt-2.5 overflow-x-auto border border-line bg-[#0d1626] px-4 py-3 font-tech text-[11.5px] leading-relaxed text-data" style={{ borderRadius: "10px" }}>
-{`npm i -g @bubblewrap/cli
-bubblewrap init --manifest https://TUO-SITO/manifest.webmanifest
-bubblewrap build   # → app-release-signed.apk pronto da installare`}
+{`npx cap add android            # crea il progetto Gradle in android/
+npm run build && npx cap sync  # compila e copia l'app
+npx cap open android           # → Build ▸ Build APK(s)`}
               </pre>
+              <p className="mt-2 text-[12px] text-faint">
+                APK in <span className="font-tech">android/app/build/outputs/apk/debug/</span>.
+                Aggiungi <span className="font-tech text-dim">&lt;uses-permission android:name="android.permission.NFC"/&gt;</span>{" "}
+                in AndroidManifest.xml.
+              </p>
             </div>
           </li>
         </ol>

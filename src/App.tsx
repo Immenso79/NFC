@@ -299,6 +299,10 @@ export default function App() {
             di MIFARE Classic non è supportata da Android standard: questa app la simula a scopo
             didattico.
           </p>
+          <p className="font-tech mt-2 text-[10.5px] tracking-[0.14em] text-faint">
+            VUOI L'APK? → GUIDA PASSO-PASSO NEL FILE <span className="text-data">COME-FARE-APK.MD</span> ·
+            CAPACITOR GIÀ CONFIGURATO NEL PROGETTO
+          </p>
         </footer>
       </div>
 
