@@ -1,6 +1,7 @@
 /* TAGKEY · service worker — network-first con fallback in cache */
-const CACHE = "tagkey-v1";
-const CORE = ["/", "/index.html", "/manifest.webmanifest", "/icons/icon.svg"];
+const CACHE = "tagkey-v2";
+/* percorsi relativi: funziona sia in radice sia su /nome-repo/ (GitHub Pages) */
+const CORE = ["./", "./index.html", "./manifest.webmanifest", "./icons/icon.svg"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
@@ -33,7 +34,7 @@ self.addEventListener("fetch", (e) => {
         return res;
       })
       .catch(() =>
-        caches.match(request).then((hit) => hit || caches.match("/index.html"))
+        caches.match(request).then((hit) => hit || caches.match("./index.html"))
       )
   );
 });
