@@ -19,9 +19,14 @@ import Keyring from "./components/Keyring";
 import DoorOpener from "./components/DoorOpener";
 import AccessLog from "./components/AccessLog";
 import TechNotes from "./components/TechNotes";
-import { IcDoor, IcInfo, IcKey, IcList, IcNfc, IcScan, ToastStack } from "./components/ui";
+import { IcDoor, IcDownload, IcInfo, IcKey, IcList, IcNfc, IcScan, ToastStack } from "./components/ui";
 
 type Tab = "scan" | "keyring" | "door" | "log" | "notes";
+
+type BeforeInstallPromptEvent = Event & {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+};
 
 const TABS: { id: Tab; label: string; icon: (p: { size?: number }) => ReactNode }[] = [
   { id: "scan", label: "Lettura", icon: (p) => <IcScan {...p} /> },
@@ -38,6 +43,7 @@ export default function App() {
   const [activeId, setActiveId] = useState<string | null>(loadActive);
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [clock, setClock] = useState(() => new Date());
+  const [installEvt, setInstallEvt] = useState<BeforeInstallPromptEvent | null>(null);
   const webNfc = useMemo(hasWebNfc, []);
 
   useEffect(() => saveCards(cards), [cards]);
@@ -48,6 +54,34 @@ export default function App() {
     const t = window.setInterval(() => setClock(new Date()), 1000);
     return () => clearInterval(t);
   }, []);
+
+  /* -------- prompt di installazione PWA (Chrome su Android) -------- */
+  useEffect(() => {
+    const onBip = (e: Event) => {
+      e.preventDefault();
+      setInstallEvt(e as BeforeInstallPromptEvent);
+    };
+    const onInstalled = () => {
+      setInstallEvt(null);
+      toast("ok", "App installata sulla schermata Home");
+    };
+    window.addEventListener("beforeinstallprompt", onBip);
+    window.addEventListener("appinstalled", onInstalled);
+    return () => {
+      window.removeEventListener("beforeinstallprompt", onBip);
+      window.removeEventListener("appinstalled", onInstalled);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const doInstall = async () => {
+    if (!installEvt) return;
+    await installEvt.prompt();
+    const choice = await installEvt.userChoice;
+    if (choice.outcome === "accepted") toast("ok", "Installazione avviata");
+    else toast("warn", "Installazione annullata — puoi riprovare dal menu di Chrome");
+    setInstallEvt(null);
+  };
 
   const toast = (kind: ToastKind, message: string) => {
     const id = uid();
@@ -139,6 +173,16 @@ export default function App() {
           </div>
 
           <div className="ml-auto flex items-center gap-3">
+            {installEvt && (
+              <button
+                onClick={doInstall}
+                title="Installa TAGKEY come app su questo dispositivo"
+                className="press font-display flex items-center gap-1.5 border border-ok/60 bg-ok/10 px-3 py-1.5 text-[10.5px] font-bold tracking-[0.14em] text-ok uppercase hover:bg-ok/20"
+                style={{ borderRadius: "999px" }}
+              >
+                <IcDownload size={13} /> Installa
+              </button>
+            )}
             <span
               className={`font-tech hidden items-center gap-1.5 border px-2.5 py-1 text-[10px] tracking-[0.18em] sm:flex ${
                 webNfc ? "border-ok/50 text-ok" : "border-line text-faint"

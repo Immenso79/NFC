@@ -103,6 +103,13 @@ export const IcChip = (p: IcProps) => (
     <path d="M9.5 7V4M14.5 7V4M9.5 20v-3M14.5 20v-3M7 9.5H4M7 14.5H4M20 9.5h-3M20 14.5h-3" />
   </Svg>
 );
+export const IcDownload = (p: IcProps) => (
+  <Svg {...p}>
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+    <path d="m7 10 5 5 5-5" />
+    <path d="M12 15V3" />
+  </Svg>
+);
 export const IcCopy = (p: IcProps) => (
   <Svg {...p}>
     <rect x="9" y="9" width="11" height="11" rx="2" />

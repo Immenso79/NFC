@@ -164,6 +164,74 @@ export default function TechNotes() {
           </div>
         </div>
       </div>
+
+      {/* ----------------------- da sito ad APK ----------------------- */}
+      <div className="mt-5 overflow-hidden border border-line bg-hull" style={{ borderRadius: "18px" }}>
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-5 py-4">
+          <h3 className="font-display text-lg font-bold text-ink">Da sito ad app Android — tre strade</h3>
+          <span className="font-tech border border-line bg-panel px-2.5 py-1 text-[10px] tracking-[0.2em] text-faint" style={{ borderRadius: "6px" }}>
+            GUIDA COMPLETA: COME-FARE-APK.MD
+          </span>
+        </div>
+        <ol className="divide-y divide-line">
+          <li className="grid gap-2 px-5 py-4 sm:grid-cols-[64px_1fr]">
+            <span className="font-display text-3xl font-bold text-ok">1</span>
+            <div>
+              <p className="font-display text-[14.5px] font-bold tracking-wide text-ok uppercase">
+                PWA · già pronta, zero sbatti
+              </p>
+              <p className="mt-1 max-w-2xl text-[13.5px] leading-relaxed text-dim">
+                Su Android apri l'app in <strong className="text-ink">Chrome</strong> → menu{" "}
+                <span className="font-tech text-ink">⋮</span> →{" "}
+                <strong className="text-ink">"Installa app"</strong> (quando disponibile compare
+                anche il pulsante <span className="font-tech text-ok">INSTALLA</span> in alto a
+                destra). Icona in home screen, avvio a schermo intero, funzionamento offline.
+                Nessun APK da compilare, si aggiorna da sola.
+              </p>
+            </div>
+          </li>
+          <li className="grid gap-2 px-5 py-4 sm:grid-cols-[64px_1fr]">
+            <span className="font-display text-3xl font-bold text-sig">2</span>
+            <div>
+              <p className="font-display text-[14.5px] font-bold tracking-wide text-sig uppercase">
+                Capacitor · APK vero in 5 comandi
+              </p>
+              <p className="mt-1 max-w-2xl text-[13.5px] leading-relaxed text-dim">
+                Serve <strong className="text-ink">Android Studio</strong> (con JDK 17 e SDK 34).
+                Il progetto web viene impacchettato in un'app nativa con WebView:
+              </p>
+              <pre className="mt-2.5 overflow-x-auto border border-line bg-[#0d1626] px-4 py-3 font-tech text-[11.5px] leading-relaxed text-data" style={{ borderRadius: "10px" }}>
+{`npm i @capacitor/core @capacitor/android && npm i -D @capacitor/cli
+npx cap init TAGKEY com.tuonome.tagkey --web-dir dist
+npm run build && npx cap add android && npx cap sync
+npx cap open android   # → Build ▸ Build APK(s) in Android Studio`}
+              </pre>
+              <p className="mt-2 text-[12px] text-faint">
+                Aggiungi <span className="font-tech text-dim">&lt;uses-permission android:name="android.permission.NFC"/&gt;</span>{" "}
+                in AndroidManifest.xml per il Web NFC dentro la WebView.
+              </p>
+            </div>
+          </li>
+          <li className="grid gap-2 px-5 py-4 sm:grid-cols-[64px_1fr]">
+            <span className="font-display text-3xl font-bold text-data">3</span>
+            <div>
+              <p className="font-display text-[14.5px] font-bold tracking-wide text-data uppercase">
+                Bubblewrap · APK firmato senza Android Studio
+              </p>
+              <p className="mt-1 max-w-2xl text-[13.5px] leading-relaxed text-dim">
+                Se pubblichi l'app su un dominio <strong className="text-ink">HTTPS</strong>{" "}
+                (GitHub Pages, Netlify…), Bubblewrap genera un APK/AAB firmato partendo dal
+                manifest:
+              </p>
+              <pre className="mt-2.5 overflow-x-auto border border-line bg-[#0d1626] px-4 py-3 font-tech text-[11.5px] leading-relaxed text-data" style={{ borderRadius: "10px" }}>
+{`npm i -g @bubblewrap/cli
+bubblewrap init --manifest https://TUO-SITO/manifest.webmanifest
+bubblewrap build   # → app-release-signed.apk pronto da installare`}
+              </pre>
+            </div>
+          </li>
+        </ol>
+      </div>
     </section>
   );
 }
