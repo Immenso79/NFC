@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <clipPath id="r"><rect width="512" height="512" rx="112"/></clipPath>
+    <linearGradient id="shine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.22"/>
+      <stop offset="0.55" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g clip-path="url(#r)">
+    <rect width="512" height="512" fill="#0B1220"/>
+    <g stroke="#8FA3BD" stroke-opacity="0.07" stroke-width="2">
+      <path d="M0 128H512M0 256H512M0 384H512M128 0V512M256 0V512M384 0V512"/>
+    </g>
+    <g fill="none" stroke="#56D4E8" stroke-linecap="round">
+      <path d="M330 122a70 70 0 0 1 70 70" stroke-width="16"/>
+      <path d="M330 76a116 116 0 0 1 116 116" stroke-width="16" opacity="0.55"/>
+      <path d="M330 30a162 162 0 0 1 162 162" stroke-width="16" opacity="0.24"/>
+    </g>
+    <g transform="rotate(-8 256 300)">
+      <rect x="104" y="212" width="304" height="196" rx="22" fill="#FFB454"/>
+      <rect x="104" y="212" width="304" height="196" rx="22" fill="url(#shine)"/>
+      <rect x="218" y="242" width="90" height="12" rx="6" fill="#0B1220" opacity="0.22"/>
+      <rect x="250" y="352" width="126" height="14" rx="7" fill="#0B1220" opacity="0.3"/>
+      <rect x="134" y="286" width="66" height="50" rx="8" fill="#0B1220"/>
+      <g stroke="#FFB454" stroke-width="4">
+        <path d="M134 303h66M134 319h66M156 286v50M178 286v50"/>
+      </g>
+      <circle cx="372" cy="252" r="13" fill="#0B1220" opacity="0.85"/>
+    </g>
+  </g>
+</svg>

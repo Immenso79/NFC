@@ -1,0 +1,170 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Chakra Petch", sans-serif;
+  --font-body: "IBM Plex Sans", sans-serif;
+  --font-tech: "JetBrains Mono", monospace;
+
+  --color-abyss: #0b1220;
+  --color-hull: #101a2b;
+  --color-panel: #141f33;
+  --color-panel2: #182540;
+  --color-line: #23344f;
+  --color-line2: #2e4263;
+  --color-ink: #e8eef7;
+  --color-dim: #8fa3bd;
+  --color-faint: #5b6f8a;
+  --color-sig: #ffb454;
+  --color-sig2: #ff8a3d;
+  --color-data: #56d4e8;
+  --color-ok: #4ade80;
+  --color-err: #ff6b6b;
+}
+
+html {
+  scrollbar-color: #2e4263 #0b1220;
+}
+
+body {
+  background-color: var(--color-abyss);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- ambient layered background ---------- */
+.lab-bg {
+  background:
+    radial-gradient(1100px 600px at 12% -8%, rgba(86, 212, 232, 0.09), transparent 60%),
+    radial-gradient(900px 700px at 105% 108%, rgba(255, 138, 61, 0.08), transparent 55%),
+    radial-gradient(700px 500px at 85% 5%, rgba(74, 222, 128, 0.05), transparent 60%),
+    var(--color-abyss);
+}
+.lab-grid {
+  background-image:
+    linear-gradient(rgba(143, 163, 189, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(143, 163, 189, 0.055) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 30%, black 30%, transparent 78%);
+}
+.scanline {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(86, 212, 232, 0.05) 45%,
+    rgba(86, 212, 232, 0.14) 50%,
+    rgba(86, 212, 232, 0.05) 55%,
+    transparent 100%
+  );
+  height: 220px;
+  animation: sweep 9s linear infinite;
+}
+@keyframes sweep {
+  0% { transform: translateY(-240px); }
+  100% { transform: translateY(110vh); }
+}
+
+/* ---------- NFC field waves ---------- */
+.wave {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1.5px solid rgba(86, 212, 232, 0.55);
+  animation: wave 2.4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes wave {
+  0% { transform: scale(0.35); opacity: 0; }
+  12% { opacity: 0.9; }
+  100% { transform: scale(1.25); opacity: 0; }
+}
+.wave-hot {
+  border-color: rgba(255, 180, 84, 0.6);
+}
+
+/* ---------- LEDs ---------- */
+.led {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  display: inline-block;
+}
+.led-on { animation: ledPulse 1.6s ease-in-out infinite; }
+@keyframes ledPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px currentColor; }
+  50% { opacity: 0.45; box-shadow: 0 0 2px currentColor; }
+}
+
+/* ---------- tag / cards ---------- */
+.tag-in {
+  animation: tagIn 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+@keyframes tagIn {
+  from { transform: translateY(46px) rotate(-4deg); opacity: 0; }
+  to { transform: translateY(0) rotate(0deg); opacity: 1; }
+}
+.tag-jitter {
+  animation: tagJitter 0.5s steps(2) infinite;
+}
+@keyframes tagJitter {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(0.5px, -0.5px); }
+  100% { transform: translate(-0.5px, 0.5px); }
+}
+.tile-lift {
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.3, 1.1), box-shadow 0.25s, border-color 0.25s;
+}
+.tile-lift:hover {
+  transform: translateY(-4px) rotate(-0.4deg);
+  box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.7);
+}
+
+/* ---------- readouts ---------- */
+.reveal-line {
+  animation: lineIn 0.35s ease both;
+}
+@keyframes lineIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.blink { animation: blinkStep 1.1s steps(2) infinite; }
+@keyframes blinkStep { 50% { opacity: 0; } }
+
+/* ---------- door ---------- */
+.bolt-move {
+  transition: transform 0.55s cubic-bezier(0.7, -0.2, 0.3, 1.25);
+}
+.door-swing {
+  transition: transform 0.9s cubic-bezier(0.3, 0.7, 0.2, 1);
+  transform-origin: 14px 50%;
+}
+.glow-ok { filter: drop-shadow(0 0 10px rgba(74, 222, 128, 0.8)); }
+.glow-err { filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.8)); }
+
+/* ---------- toasts ---------- */
+.toast-in { animation: toastIn 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.15) both; }
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ---------- misc ---------- */
+.hazard {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 180, 84, 0.16) 0 10px,
+    transparent 10px 20px
+  );
+}
+.press:active { transform: translateY(1px) scale(0.99); }
+.press { transition: transform 0.12s, background-color 0.2s, border-color 0.2s, color 0.2s; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
